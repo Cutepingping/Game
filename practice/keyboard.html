@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/easeljs.min.js"></script>
+</head>
+<body onload="init()">
+<canvas id="canvas" width = "1000" height="800" style="border: solid 1px"></canvas>
+</body>
+<script>
+    var stage;
+    function init(){
+        stage = new createjs.Stage(document.getElementById('canvas'));
+        createjs.Ticker.addEventListener("tick".handleTick);
+        createjs.Ticker.setFPS(60);
+        start();
+    }
+    const ARROW_KEY_LEFT = 37;
+    const ARROW_KET_UP = 38;
+    const ARROW_KEY_RIGHT = 39;
+    const ARROW_KEY_DOWN = 40;
+    //用onkeydoown函数捕捉键盘按下事实
+    function start(){
+        window.onkeydown = onDPad;
+    }
+
+    function onDPad(e){
+        switch(e.keyCode){
+            case ARROW_KEY_LEFT:
+                console.log('move left');
+                break;
+            case ARROW_KET_UP:
+                console.log('move up');
+                break;
+            case ARROW_KEY_RIGHT:
+                console.log('move right');
+            case ARROW_KEY_DOWN:
+                console.log('move down');
+                break;
+        }
+    }
+    function handleTick(e){
+        stage.update();
+    }
+</script>
+</html>

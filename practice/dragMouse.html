@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src = "lib/easeljs.min.js"></script>
+</head>
+<body onload="init()">
+<canvas id="canvas" width="500" height="300" style="border: black solid 1px;"></canvas>
+</body>
+<script>
+    var stage;
+
+    function init(){
+        stage = new createjs.Stage(document.getElementById('canvas'));
+        createjs.Ticker.addEventListener("Tick",handleTick);
+        createjs.Ticker.setFPS(60);
+        start();
+    }
+
+    function handleTick(e){
+        stage.update();
+    }
+
+    function start(){
+        var circle = new createjs.Shape();
+        circle.graphics.beginFill('#0000FF').drawCircle(0,0,50);
+        circle.x = stage.canvas.width/2;
+        circle.y = stage.canvas.height/2;
+
+        circle.addEventListener('mousedown',function(e){
+            //设置鼠标点中与移动的效果为圆形的位置随着鼠标的（x,y）轴变化而变化
+            stage.addEventListener('stagemousemove',function(e){
+                circle.X = stage.mouseX;
+                circle.Y = stage.mouseY;
+            });
+            //设置鼠标放开效果为清除所有事件
+            stage.addEventListener('stagemouseup',function(e){
+                e.target.removeAllEventListeners();
+            });
+        });
+        stage.addChild(circle);
+    }
+</script>
+</html>

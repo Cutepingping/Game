@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/easeljs.min.js"></script>
+</head>
+<!--body元素中加入一个onload事件，该事件执行init()操作-->
+<body onload="init()">
+<!--绘制画板canvas，所有的createJS操作均在画板中进行。-->
+<canvas id="canvas" width="700" height="400" style="border:black solid 1px"></canvas>
+</body>
+<script>
+    //定义画板变量
+    var stage;
+    function init(){
+        //通过createJS.Stage获取id为“canvas”canvas画板来生成stage舞台。
+       stage = new createjs.Stage(document.getElementById('canvas'));
+        //通过createJS。Ticker。addEventListener生成tick事件，事件执行handleTick函数，
+        createjs.Ticker.addEventListener('tick',handleTick);
+        //为事件设置执行频率，该案例为60帧/秒
+        createjs.Ticker.setFPS(60);
+        start();//执行drawButterflies（）函数；
+    }
+    //handleTick函数stage.update()实现舞台的更新。
+    function  handleTick(e){
+        stage.update();
+    }
+    function start(){
+        drawButterflies();
+    }
+    function drawButterflies(){
+        //读取一个名为images/butterfly.jpg的图片；
+        var imgPath = 'images/butterfly.jpg';
+        //利用Bitmap创建三个蝴蝶对象，并且butterfly2.x设置蝴蝶的位置
+            butterfly1= new createjs.Bitmap(imgPath);
+            butterfly2 = new createjs.Bitmap(imgPath);
+            butterfly3 = new createjs.Bitmap(imgPath);
+        butterfly2.x = 200;
+        butterfly3.x = 400;
+        //将三个蝴蝶对象加载到stage舞台上；
+        stage.addChild(butterfly1,butterfly2,butterfly3);
+        //更新舞台；
+        stage.update();
+        //使用setTimeout函数间隔1000毫秒执行moveButterfly函数；
+        setTimeout(moveButterfly,1000);
+    }
+    function moveButterfly(){
+        butterfly2.y += 200;
+    }
+</script>
+</html>
